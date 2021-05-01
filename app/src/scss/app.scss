@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+@import "boot";
+@import "components/header";
+
+/* basic classes */
+.container {
+    width: min(90vw);
+    margin: 0 auto;
+}
+
+main > .container{
+    padding: var(--header-height) 0;
+}
+
+.status{
+    color: var(--first-color-alt);
+}
+
+.title{
+    font-size: var(--biggest-font-size);
+    font-weight: var(--font-bold);
+    margin-bottom: var(--mb-2);
+}
+
+.description:not(:last-of-type){
+    margin-bottom: var(--mb-3);
+}
