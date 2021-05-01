@@ -2,7 +2,7 @@
     "name": "php-react-app",
     "author": "Rodrigo Siqueira",
     "version": "1.0.0",
-    "description": "",
+    "description": "Setup avançado para aplicação PHP e React compatível com JSX e SCSS.",
     "main": "index.js",
     "scripts": {
         "watch": "webpack --colors --debug --display-chunk -w --env.NODE_ENV=development --mode development",
