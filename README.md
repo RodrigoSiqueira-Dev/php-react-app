@@ -10,7 +10,7 @@ Need to have Apache (XAMPP) runing and Node.js already installed for npm comands
 npm install
 
 ##### Open your localhost
-http://localhost/php-react-app
+http://localhost/php-react-app (or in case of SSL https://localhost/php-react-app)
 
 ###### Run webpack for watching files
 npm run watch
