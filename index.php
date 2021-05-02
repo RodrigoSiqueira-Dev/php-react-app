@@ -11,7 +11,7 @@ $user = (object) [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>React PHP starter Kit</title>
+    <title>PHP React App</title>
     <link rel="stylesheet" href="./static/assets/css/app.css" type="text/css">
 </head>
 <script type="text/javascript">
