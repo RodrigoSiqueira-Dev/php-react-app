@@ -15,6 +15,7 @@ let config = {
         path: path.resolve(__dirname, 'static', 'assets', 'js'),
         filename: '[name].bundle.js'
     },
+    devtool: false,
     plugins: [
         new MiniCssExtractPlugin({
             filename: path.join('..', 'css', 'app.css')
@@ -31,10 +32,9 @@ let config = {
             $: 'jquery',
             jQuery: 'jquery'
         }),
-        // Removendo erros de Devtools e Map false
-        new webpack.SourceMapDevToolPlugin({})
+        // // Removendo erros de Devtools e Map false
+        // new webpack.SourceMapDevToolPlugin({})
     ],
-    devtool: false,
     resolve: {
         extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
     },
@@ -69,7 +69,7 @@ let config = {
             },
             // img fonts
             {
-                test: /.(png|woff(2)?|eot|ttf|svg|gif)(\?[a-z0-9=\.]+)?$/,
+                test: /.(jpeg?g|png|gif|svg|woff(2)?|eot|ttf)(\?[a-z0-9=\.]+)?$/i,
                 use: [
                     {
                         loader: 'file-loader',
@@ -86,25 +86,10 @@ let config = {
         myApp: 'myApp',
     }
 };
+module.exports = (env, argv) => {
+    if (argv.mode === 'development') {
+        config.watch = true;
+    }
+    return config;
+};
 
-if (process.env.NODE_ENV === 'production') {
-    config.plugins.push(
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: false,
-            compress: {
-                sequences: true,
-                conditionals: true,
-                booleans: true,
-                if_return: true,
-                join_vars: true,
-                drop_console: true
-            },
-            output: {
-                comments: false
-            },
-            minimize: true
-        })
-    );
-}
-
-module.exports = config;
