@@ -13,7 +13,7 @@ npm install
 http://localhost/php-react-app (or in case of SSL https://localhost/php-react-app)
 
 ###### Run webpack for watching files
-npm run watch
+npm start
 
 ###### Build for production
 npm run build
