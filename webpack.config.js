@@ -1,8 +1,6 @@
-'use strict';
-
-const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 let config = {
     // Definindo arquivos de entrada (main)
@@ -18,23 +16,31 @@ let config = {
         filename: '[name].bundle.js'
     },
     plugins: [
-        // Extraindo css para não misturar os arquivos css e js incluídos em uma pasta o que seria o caso no código acima
-        new ExtractTextPlugin(path.join('..', 'css', 'app.css')),
-
-        // Se o aplicativo react está se conectando a uma API, 
-        // então é bom passar Endpoints estáticos via webpack 
+        new MiniCssExtractPlugin({
+            filename: path.join('..', 'css', 'app.css')
+        }),
+        // Se o aplicativo react está se conectando a uma API,
+        // então é bom passar Endpoints estáticos via webpack
         // ou quaisquer outras variáveis ​​estáticas como a versão da API que o aplicativo usará
         new webpack.DefinePlugin({
             '__DEV__': JSON.stringify(true),
             '__API_HOST__': JSON.stringify('http://localhost/php-react-app/'),
         }),
+        // Se usar jQuery no projeto
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+        }),
+        // Removendo erros de Devtools e Map false
+        new webpack.SourceMapDevToolPlugin({})
     ],
+    devtool: false,
     resolve: {
         extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
     },
     module: {
         rules: [
-            // js 
+            // js
             {
                 test: /\.(js|jsx|tsx|ts)$/,
                 exclude: path.resolve(__dirname, 'node_modules'),
@@ -42,24 +48,24 @@ let config = {
                     loader: 'babel-loader'
                 },
             },
-            // scss
+            // scss e css
             {
-                test: /\.scss$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        {
-                            loader: 'css-loader',
-                        },
-                        'postcss-loader',
-                        'sass-loader'
-                    ]
-                })
+                test: /\.(sa|sc|c)ss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'postcss-loader',
+                    'sass-loader'
+                ]
             },
             // css
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader', 'postcss-loader']
+                test: /\.css$/i,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'postcss-loader'
+                ]
             },
             // img fonts
             {

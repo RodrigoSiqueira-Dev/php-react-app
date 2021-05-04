@@ -1,0 +1,75 @@
+# Iniciando projeto (package.json)
+
+npm init -y
+
+
+# Instalando webpack como dependencia de desenvolvimento
+
+npm install --save-dev webpack webpack-cli webpack-dev-server
+
+
+# Criar pasta source da aplicação onde será o ponto de entrada do projeto através do arquivo index.js
+# A pasta src vai conter também os arquivos de estilo SCSS além dos arquivos JS
+# Após transpilados, os arquivos JS JSX SCSS CSS serão enviados para uma pasta pública static
+# Caso usar um framework como Bootstrap por exemplo, poderia importar diretamente para app.scss
+# Usando ~bootstrap a importação é feita diretamente de node_modules
+# Ex.: @import "~bootstrap";
+
+# app/src/index.js
+# app/src/scss/app.scss
+
+# Tendo instalado webpack e webpack-cli criar webpack.config.js
+# neste arquivo exportar as configurações do webpack com: module.exports = { ... }
+# ou criar uma variável: let config = { ... }
+# e exportar no final: module.exports = config;
+
+let config = {
+
+}
+module.exports = config;
+
+# Criar pontos de entrada e de saída em webpack.config.js
+
+# Em package.json
+# remover o de scripts o test e criar os scripts de build e dev ou watch ou start para desenvolvimento
+# estes comandos vão chamar a biblioteca webpack nos modos --mode development e --mode production
+
+
+# Para usar o Babel e transpilar os códigos JS para uma versão que o navegador entenda, instalar o babel e suas dependencias:
+# babel-loader
+# @babel/core
+# @babel/preset-env
+# e será usado o react:
+# @babel/preset-react
+
+#Instalar como dependencia de desenvolvimento:
+
+# npm install babel-loader @babel/core @babel/preset-env @babel/preset-react @babel/preset-typescript --save-dev
+
+# Por mais que tenha informado que tem que usar o babel e suas dependencias assim:
+
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx|tsx|ts)$/,
+                loader: 'babel-loader',
+                exclude: path.resolve(__dirname, 'node_modules'),
+            },
+        ]
+    }
+
+# é preciso criar mais uma configuração para o Babel na raiz do projeto no arquivo .babelrc
+{
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react",
+        "@babel/preset-typescript"
+    ]
+}
+
+# scss e css plugins
+
+npm install node-sass sass-loader css-loader mini-css-extract-plugin autoprefixer --save-dev
+
+# File Loader
+npm install file-loader --save-dev
