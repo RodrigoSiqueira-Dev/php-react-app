@@ -25,7 +25,6 @@ function App() {
                     <p className="description">{email}</p>
                     <p className="description">API host variable {__API_HOST__}</p>
                     <p className="description">DEV {__DEV__ ? "TRUE" : "FALSE"} </p>
-                    <h1>Hello World!</h1>
                 </div>
             </main>
         </>
