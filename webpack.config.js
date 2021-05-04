@@ -33,7 +33,7 @@ let config = {
             jQuery: 'jquery'
         }),
         // // Removendo erros de Devtools e Map false
-        // new webpack.SourceMapDevToolPlugin({})
+        new webpack.SourceMapDevToolPlugin({})
     ],
     resolve: {
         extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
