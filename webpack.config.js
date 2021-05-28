@@ -17,6 +17,7 @@ let config = {
     },
     devtool: false,
     plugins: [
+        // Extraindo e separando arquivo css
         new MiniCssExtractPlugin({
             filename: path.join('..', 'css', 'app.css')
         }),
