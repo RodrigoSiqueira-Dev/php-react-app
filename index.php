@@ -12,7 +12,7 @@ $user = (object) [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP React App</title>
-    <link rel="stylesheet" href="./static/assets/css/app.css" type="text/css">
+    <link rel="stylesheet" href="./static/assets/css/style.css" type="text/css">
 </head>
 <script type="text/javascript">
     var STATIC_URL = 'http://localhost/php-react-app';
@@ -26,7 +26,7 @@ $user = (object) [
 
     <div id="app"></div>
 
-    <script type="text/javascript" src="./static/assets/js/main.bundle.js"></script>
+    <script type="text/javascript" src="./static/assets/js/main.js"></script>
 
 </body>
 

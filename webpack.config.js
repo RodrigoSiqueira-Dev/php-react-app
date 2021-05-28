@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 let config = {
     // Definindo arquivos de entrada (main)
@@ -10,35 +11,12 @@ let config = {
             './app/src/scss/app.scss'
         ]
     },
-    // Definindo saída de arquivos compilados
+    // Definindo saída de arquivos transpilados
     output: {
-        path: path.resolve(__dirname, 'static', 'assets', 'js'),
-        filename: '[name].bundle.js'
+        path: path.resolve(__dirname, './static', 'assets', 'js'),
+        filename: '[name].js'
     },
-    devtool: false,
-    plugins: [
-        // Extraindo e separando arquivo css
-        new MiniCssExtractPlugin({
-            filename: path.join('..', 'css', 'app.css')
-        }),
-        // Se o aplicativo react está se conectando a uma API,
-        // então é bom passar Endpoints estáticos via webpack
-        // ou quaisquer outras variáveis ​​estáticas como a versão da API que o aplicativo usará
-        new webpack.DefinePlugin({
-            '__DEV__': JSON.stringify(true),
-            '__API_HOST__': JSON.stringify('http://localhost/php-react-app/'),
-        }),
-        // Se usar jQuery no projeto
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery'
-        }),
-        // // Removendo erros de Devtools e Map false
-        new webpack.SourceMapDevToolPlugin({})
-    ],
-    resolve: {
-        extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
-    },
+    // Module
     module: {
         rules: [
             // js
@@ -51,11 +29,10 @@ let config = {
             },
             // scss e css
             {
-                test: /\.(sa|sc|c)ss$/,
+                test: /\.(sa|sc|c)ss$/i,
                 exclude: path.resolve(__dirname, 'node_modules'),
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'babel-loader',
                     'css-loader',
                     'postcss-loader',
                     'sass-loader'
@@ -66,25 +43,71 @@ let config = {
                 test: /\.css$/i,
                 exclude: path.resolve(__dirname, 'node_modules'),
                 use: [
-                    'babel-loader',
-                    'style-loader',
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
                     'postcss-loader'
                 ]
             },
-            // img fonts
+            // fonts
             {
-                test: /.(jpeg?g|png|gif|svg|woff(2)?|eot|ttf)(\?[a-z0-9=\.]+)?$/i,
+                test: /\.(woff(2)?|eot|ttf)(\?[a-z0-9=\.]+)?$/i,
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
-                            name: '../css/[hash].[ext]'
+                            name: '[name].[ext]',
+                            outputPath: "../fonts/"
                         }
                     }
                 ]
+            },
+            // img
+            {
+                test: /\.(jp(e)?g|png|gif|svg)$/i,
+                use: {
+                    loader: "file-loader",
+                    options: {
+                        name: "[name].[ext]",
+                        outputPath: "../img/"
+                    }
+                }
             }
         ]
+    },
+    devtool: false,
+    // Plugins
+    plugins: [
+        // Removendo erros de Devtools e Map false
+        new webpack.SourceMapDevToolPlugin({}),
+        // Extraindo e separando arquivo css
+        new MiniCssExtractPlugin({
+            filename: path.join('..', 'css', 'style.css')
+            //filename: ({ chunk }) => `${chunk.name.replace('/js/', '/css/')}.css`,
+        }),
+        // Se o aplicativo react está se conectando a uma API,
+        // então é bom passar Endpoints estáticos via webpack
+        // ou quaisquer outras variáveis ​​estáticas como a versão da API que o aplicativo usará
+        new webpack.DefinePlugin({
+            '__DEV__': JSON.stringify(true),
+            '__API_HOST__': JSON.stringify('http://localhost/php-react-app/'),
+        }),
+        // Se usar jQuery no projeto
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+        })
+    ],
+    optimization: {
+        // Minimize for production, uncomment the next line
+        // minimize: true,
+        minimizer: [
+            // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
+            // `...`,
+            new CssMinimizerPlugin(),
+        ],
+    },
+    resolve: {
+        extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
     },
     //  Importando a variável global MyApp para nosso aplicativo ReactJs
     externals: {

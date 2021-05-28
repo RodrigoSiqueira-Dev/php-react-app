@@ -18,9 +18,7 @@ function App() {
             <Header />
             <main>
                 <div className="container">
-                    {logged &&
-                        <h2 className="status">Logged In</h2>
-                    }
+                    {logged && <h2 className="status">Logged In</h2>}
                     <h1 className="title">{name}</h1>
                     <p className="description">{email}</p>
                     <p className="description">API host variable {__API_HOST__}</p>
