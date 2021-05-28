@@ -51,8 +51,10 @@ let config = {
             // scss e css
             {
                 test: /\.(sa|sc|c)ss$/,
+                exclude: path.resolve(__dirname, 'node_modules'),
                 use: [
                     MiniCssExtractPlugin.loader,
+                    'babel-loader',
                     'css-loader',
                     'postcss-loader',
                     'sass-loader'
@@ -61,7 +63,9 @@ let config = {
             // css
             {
                 test: /\.css$/i,
+                exclude: path.resolve(__dirname, 'node_modules'),
                 use: [
+                    'babel-loader',
                     'style-loader',
                     'css-loader',
                     'postcss-loader'
